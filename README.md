@@ -45,7 +45,7 @@ dependencies:
 
 ### Usage 
 1. generate drug fingerprints for drugs in generate_drug_features packages(take KIBA as example)
-   + Running:
+     Running:
    + python MACC_fingerprint.py -drug_smile_path .KIBA/drugs.xlsx -feature_save_path ./KIBA/drug_features/MACC_features.xlsx
    + python Mogan_fingerprint.py -drug_smile_path .KIBA/drugs.xlsx -feature_save_path ./KIBA/drug_features/Mogan_features.xlsx
    + python Topological_fingerprint.py -drug_smile_path .KIBA/drugs.xlsx -feature_save_path ./KIBA/drug_features/Topological_features.xlsx
@@ -55,8 +55,8 @@ dependencies:
         drug_features/Topological_features.xlsx
 
 2. generate protein features in generate_protein_features packages with iFeatures tool
-   + retrieve all the fasta sequences according to the protein uniprot id, and put all the fasta seqs in fasta_file directory. 
-   + Running: 
+     retrieve all the fasta sequences according to the protein uniprot id, and put all the fasta seqs in fasta_file directory. 
+     Running: 
    + python generate_fasta_file.py --protein_path /home/jiani.ma/MULGA/dataset/KIBA/targets.xlsx --path_to_directory /home/jiani.ma/MULGA/generate_protein_features/fasta_seqs
    
    + combing all protein sequences orderly 
@@ -65,8 +65,8 @@ dependencies:
 
    ---> fasta_seqs.txt 
 
-   + retrieve protein features including AAC, CTD, Moran Correlation and PAAC features with iFeatures 
-   + Running: 
+     retrieve protein features including AAC, CTD, Moran Correlation and PAAC features with iFeatures 
+     Running: 
    + python iFeature.py --file ../fasta_seqs.txt --type AAC --out ../protein_features/AAC_features.txt
    + python iFeature.py --file ../fasta_seqs.txt --type CTDC --out ../protein_features/CTDC_features.txt
    + python iFeature.py --file ../fasta_seqs.txt --type CTDT --out ../protein_features/CTDT_features.txt
@@ -86,7 +86,7 @@ dependencies:
    
 
 4. setting the hyperparameters in the config_init.py then train and test model under 10fold CV train-test scheme
-   + Running: 
+   Running: 
    balanced_situatuion on DrugBank 
    python main.py --root_path "/home/jiani.ma/MULGA/dataset 
                   --dataset "DrugBank"
