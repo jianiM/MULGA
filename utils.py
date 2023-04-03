@@ -1,17 +1,120 @@
+#!/usr/bin/python3 -u
 # -*- coding: utf-8 -*-
 """
-Created on Sun May 29 17:55:57 2022
+Created on Sun Jul 17 11:12:54 2022
+
 @author: Jiani Ma
 """
 
-import numpy as np 
-import torch
-import torch.nn.functional as F 
-#torch.manual_seed(args.seed)
-from sklearn.metrics import roc_curve, auc,average_precision_score,f1_score,accuracy_score
+import os
+os.environ["MKL_NUM_THREADS"] = "1" 
+os.environ["NUMEXPR_NUM_THREADS"] = "1" 
+os.environ["OMP_NUM_THREADS"] = "1"
+import numpy as np
+import pandas as pd
+import matplotlib as mpl
+#mpl.use('Agg')
+from scipy import linalg
+import matplotlib.pyplot as plt
+import argparse
+from numpy.linalg import norm
+from random import normalvariate
+from sklearn.model_selection import KFold
+from numpy import linalg as LA
 
+def compute_GSTtol(lam,p):
+    pow1 = 1 / (2-p)
+    pow2 = (p-1) / (2-p)
+    root = 2 * lam *(1-p)
+    gsttol = np.power(root,pow1) + lam*p *np.power(root,pow2)
+    return gsttol
 
+def GMST(A,lam,p):
+    U,s,VT = LA.svd(A,full_matrices=False)
+    gst_tol = compute_GSTtol(lam,p)
+    gst_sigma_arr = np.zeros(len(s))
+    for i in range(len(s)):
+        sigma = s[i]        
+        if sigma>gst_tol:
+            gst_sigma = sigma 
+            for k in range(2):
+                gst_sigma = sigma - lam * p *np.power(gst_sigma,p-1)
+        else: 
+            gst_sigma = 0                 
 
+        gst_sigma_arr[i] = gst_sigma  
+    S = np.diag(gst_sigma_arr)
+    gmst_tmp = np.dot(U,S)
+    gmst = np.dot(gmst_tmp,VT)
+    return gmst
+
+def LaplacianMatrix(S): 
+    m = S.shape[0]
+    D = np.zeros((m,m))
+    d = np.sum(S,axis=1)
+    D = np.diag(d)
+    snL = D - S
+    return snL 
+
+def update_W(X,U,mu_1,p):
+    lam = 1/mu_1
+    mat = X + lam*U 
+    W = GMST(mat,lam,p)
+    return W 
+
+def update_X(lambda_d,lambda_t,Ld,Lt,mu_1,mu_2,W,Z,U,V,m,n):
+    a = 2 * lambda_d * Ld + mu_1 * np.identity(m)
+    b = 2 * lambda_t * Lt + mu_2 * np.identity(n)
+    q = mu_1 * W + mu_2 * Z - U -V 
+    X = linalg.solve_sylvester(a, b, q)    
+    return X 
+
+def update_Z(alpha,mu_2,A,V,X,A_mask):
+    coff_one = alpha/mu_2
+    coff_two = 1/mu_2
+    coff_three = alpha/(alpha+mu_2)
+    common_term = coff_one * np.multiply(A_mask,A) + coff_two * V + X 
+    Z = common_term - coff_three*np.multiply(A_mask,common_term) 
+    return Z 
+
+def update_U_V(lastU,lastV,beta,X,W,Z):
+    U = lastU + beta*(X-W)
+    V = lastV + beta*(X-Z)
+    return U, V 
+
+def converge(X,W,Z): 
+    XW_threshold = LA.norm(X-W)
+    XZ_threshold = LA.norm(X-Z)
+    return XW_threshold, XZ_threshold    
+
+def get_drug_dissimmat(drug_affinity_matrix,topk):
+    drug_num  = drug_affinity_matrix.shape[0]
+    drug_dissim_mat = np.zeros((drug_num,topk))
+    index_list = np.arange(drug_num)
+    for i in range(drug_num):
+        score = drug_affinity_matrix[i]
+        index_score = list(zip(index_list,score))
+        sorted_result = sorted(index_score,key=lambda x: x[1],reverse=False)[1:topk+1]
+        drug_id_list = np.zeros(topk)
+        for j in range(topk):
+            drug_id_list[j] = sorted_result[j][0]            
+        drug_dissim_mat[i] = drug_id_list
+    return drug_dissim_mat 
+
+def get_negative_samples(mask,drug_dissimmat):    
+    pos_num = np.sum(mask)     # 193
+    pos_id = np.where(mask==1) # 2D postion of mask,2 * 193
+    drug_id = pos_id[0]        # 193
+    t_id = pos_id[1]           # 193 
+    neg_mask = np.zeros_like(mask)  
+    for i in range(pos_num):   # for each positive sample  
+        d = drug_id[i]
+        t = t_id[i] 
+        pos_drug = drug_dissimmat[d]  # 10 
+        for j in range(len(pos_drug)):
+            neg_mask[pos_drug[j]][t] = 1 
+    return neg_mask 
+    
 def get_metric(real_score, predict_score):
     sorted_predict_score = np.array(
         sorted(list(set(np.array(predict_score).flatten()))))
@@ -56,78 +159,3 @@ def get_metric(real_score, predict_score):
     recall = recall_list[max_index]
     precision = precision_list[max_index]
     return TP,FP,FN,TN,fpr,tpr,auc[0, 0], aupr[0, 0],f1_score, accuracy, recall, specificity, precision
-
-
-def get_negative_samples(mask,drug_dissimmat):    
-    pos_num = np.sum(mask)     # 193
-    pos_id = np.where(mask==1) # 2D postion of mask,2 * 193
-    drug_id = pos_id[0]        # 193
-    t_id = pos_id[1]           # 193 
-    neg_mask = np.zeros_like(mask)  
-    for i in range(pos_num):   # for each positive sample  
-        d = drug_id[i]
-        t = t_id[i] 
-        pos_drug = drug_dissimmat[d]  # 10 
-        for j in range(len(pos_drug)):
-            neg_mask[pos_drug[j]][t] = 1 
-    return neg_mask 
-    
-def loss_function(pos_score,neg_score,drug_num,target_num):
-    lamda = neg_score.size(0)/pos_score.size(0)
-    term_one = lamda * torch.sum(torch.log(pos_score)) 
-    term_two = torch.sum(torch.log(1.0-neg_score))
-    term = term_one + term_two 
-    coeff = (-1.0)/(drug_num*target_num)
-    result = coeff * term 
-    return result     
-    
-def Construct_G(A_train_mat,SR,SD):
-    SR_ = np.zeros_like(SR)
-    SD_ = np.zeros_like(SD)
-    A_row1 = np.hstack((SR_,A_train_mat))
-    A_row2 = np.hstack((A_train_mat.T,SD_))
-    G = np.vstack((A_row1,A_row2))    
-    G = torch.FloatTensor(G)
-    G = Normalize_adj(G)
-    return G
-
-def Construct_H(A_train_mat,SR,SD): 
-    H_row1 = np.hstack((SR,A_train_mat))
-    H_row2 = np.hstack((A_train_mat.T,SD))
-    H = np.vstack((H_row1,H_row2))
-    H = torch.FloatTensor(H)
-    return H 
-        
-def SnLaplacianMatrix(X,n): 
-    W = np.zeros((n,n))
-    D = np.zeros((n,n))
-    for i in range(n):
-        for j in range(n):
-            W[i][j] = np.dot(X[:,i],X[:,j])
-    d = np.sum(W,axis = 1)   #row sum 
-    D = np.diag(d) 
-    # normlized_d = 1.0/np.sqrt(d)
-    # normlized_D = np.diag(normlized_d)
-    snL = D - W 
-    # snL_tmp = np.dot(normlized_D, L) 
-    # snL = np.dot(snL_tmp, normlized_D)
-    return snL
-
-def one_hot_tensor(y, num_dim):
-    y_onehot = torch.zeros(y.shape[0], num_dim)
-    y_onehot.scatter_(1, y.view(-1,1), 1)
-    return y_onehot
-
-# transform non-symmetric adjacency to symmetric ones
-def Normalize_adj(adj):
-    adj_T = adj.transpose(0,1)
-    I = torch.eye(adj.shape[0])
-    adj = adj + adj_T*(adj_T > adj).float() - adj*(adj_T > adj).float()
-    adj = F.normalize(adj + I, p=1)
-    return adj
-
-def Global_Normalize(mat):
-    max_val = np.max(mat)
-    min_val = np.min(mat)
-    mat = (mat-min_val)/(max_val-min_val)
-    return mat
