@@ -149,7 +149,7 @@ dependencies:
 
 ### Comparison Methods Rerun 
 #### DeepDTA 
-*python main.py -- root_path "/home/jiani.ma/MULGA/dataset"
+* python main.py -- root_path "/home/jiani.ma/MULGA/dataset"
                 -- dataset "KIBA"
                 -- max_drug_len "drugs.xlsx"
                 -- max_target_len "targets.xlsx"
@@ -174,7 +174,7 @@ dependencies:
 + (topk can be set to 1 or 10, where 1 denotes pos:neg = 1:1 while 10 denotes pos:neg = 1:10) 
 
 #### DeepConvDTI
-*python main.py -- root_path "/home/jiani.ma/MULGA/dataset"
+* python main.py -- root_path "/home/jiani.ma/MULGA/dataset"
                 -- dataset "KIBA"
                 -- max_drug_len "drugs.xlsx"
                 -- max_target_len "targets.xlsx"
@@ -197,7 +197,7 @@ dependencies:
                 -- n_splits 10
 
 #### GraphDTA 
-*python main.py -- num_filters 6
+* python main.py -- num_filters 6
                 -- epoch_num 100
                 -- lr 0.0005
                 -- batch_size 512
@@ -216,7 +216,7 @@ dependencies:
                 -- target_fasta_path "targets.xlsx"
 
 #### LRSpNM
-*python main.py -- data_folder "/home/amber/MULGA/LRSpNM/data/KIBA/"
+* python main.py -- data_folder "/home/amber/MULGA/LRSpNM/data/KIBA/"
                 -- drug_sim_path "drug_sim_mat.xlsx"
                 -- target_sim_path "target_sim_mat.xlsx"
                 -- DTI_path "dti_mat.xlsx"
