@@ -91,8 +91,8 @@ dependencies:
 
 4. setting the hyperparameters in the config_init.py then train and test model under 10fold CV train-test scheme
    Running: 
-   +balanced_situatuion on DrugBank 
-   *python main.py --root_path "/home/jiani.ma/MULGA/dataset 
+   + balanced_situatuion on DrugBank 
+   * python main.py --root_path "/home/jiani.ma/MULGA/dataset 
                   --dataset "DrugBank"
                   --device "cuda:0"
                   --n_splits 10 
@@ -105,7 +105,7 @@ dependencies:
                   --lr 0.000005
                   --topk 1 
   
-   +imbalanced_situatuion on DrugBank 
+   + imbalanced_situatuion on DrugBank 
    * python main.py --root_path "/home/jiani.ma/MULGA/dataset
                    --dataset "DrugBank"
                    --device "cuda:0"
@@ -119,7 +119,7 @@ dependencies:
                    --lr 0.000008
                    -- topk 10 
 
-   +balanced_situatuion on KIBA 
+   + balanced_situatuion on KIBA 
    * python main.py --root_path "/home/jiani.ma/MULGA/dataset 
                    --dataset "KIBA"
                    --device "cuda:1"
@@ -133,8 +133,8 @@ dependencies:
                    --lr 0.00005
                    --topk 1 
   
-   +imbalanced_situatuion on KIBA 
-   *python main.py --root_path "/home/jiani.ma/MULGA/dataset
+   + imbalanced_situatuion on KIBA 
+   * python main.py --root_path "/home/jiani.ma/MULGA/dataset
                    --dataset "KIBA"
                    --device "cuda:1"
                    --n_splits 10 
