@@ -5,8 +5,11 @@ A unified multi-view graph autoencoder-based approach for identifying drug-prote
 
 
 
-# Datasets 
+# Resources:
++ README.md: this file.
 
+# Datasets 
+The datasets we used in this study are provided at https://zenodo.org/deposit/7793559.
 ### DrugBank
 4 files:  
 1822 drugs 
@@ -17,6 +20,8 @@ A unified multi-view graph autoencoder-based approach for identifying drug-prote
 1720  drugs 
 220   proteins
 22154 validated DTIs
+
+
 
 four files: drugs.xlsx     --- drug id and smiles 
             targets.xlsx   --- uniprot id and fasta
@@ -82,72 +87,162 @@ dependencies:
 
 3. setting all the features path in config_init.py and generate drug affinity matrix and target affinity matrix 
    + Running: 
-   python generate_drug_affinity_mat.py > drug_affinity_mat.txt
-   python generate_target_affinity_mat.py > target_affinity_mat.txt 
+   + python generate_drug_affinity_mat.py > drug_affinity_mat.txt
+   + python generate_target_affinity_mat.py > target_affinity_mat.txt 
    
 
 4. setting the hyperparameters in the config_init.py then train and test model under 10fold CV train-test scheme
    + Running: 
-   balanced_situatuion on DrugBank 
-   python main.py --root_path "/home/jiani.ma/MULGA/dataset 
-                  --dataset "DrugBank"
-                  --device "cuda:0"
-                  --n_splits 10 
-                  --drug_sim_file "drug_affinity_mat.xlsx"
-                  --target_sim_file "target_affinity_mat.xlsx"
-                  --dti_mat "dti_mat.xlsx"
-                  --hgcn_dim 2500
-                  --dropout 0.3
-                  --epoch_num 1000
-                  --lr 0.000005
-                  --topk 1 
+   + balanced_situatuion on DrugBank 
+   + python main.py --root_path "/home/jiani.ma/MULGA/dataset 
+   +               --dataset "DrugBank"
+   +               --device "cuda:0"
+   +               --n_splits 10 
+   +               --drug_sim_file "drug_affinity_mat.xlsx"
+   +               --target_sim_file "target_affinity_mat.xlsx"
+   +               --dti_mat "dti_mat.xlsx"
+   +               --hgcn_dim 2500
+   +               --dropout 0.3
+   +               --epoch_num 1000
+   +               --lr 0.000005
+   +               --topk 1 
   
-   imbalanced_situatuion on DrugBank 
-   python main.py --root_path "/home/jiani.ma/MULGA/dataset
-                  --dataset "DrugBank"
-                  --device "cuda:0"
-                  --n_splits 10 
-                  --drug_sim_file "drug_affinity_mat.xlsx"
-                  --target_sim_file "target_affinity_mat.xlsx"
-                  --dti_mat "dti_mat.xlsx"
-                  --hgcn_dim 2800
-                  --dropout 0.3
-                  --epoch_num 1000
-                  --lr 0.000008
-                  -- topk 10 
+   + imbalanced_situatuion on DrugBank 
+   + python main.py --root_path "/home/jiani.ma/MULGA/dataset
+   +                --dataset "DrugBank"
+   +                --device "cuda:0"
+   +                --n_splits 10 
+   +                --drug_sim_file "drug_affinity_mat.xlsx"
+   +                --target_sim_file "target_affinity_mat.xlsx"
+   +                --dti_mat "dti_mat.xlsx"
+   +                --hgcn_dim 2800
+   +                --dropout 0.3
+   +                --epoch_num 1000
+   +                --lr 0.000008
+   +                -- topk 10 
 
-   balanced_situatuion on KIBA 
-   python main.py --root_path "/home/jiani.ma/MULGA/dataset 
-                  --dataset "KIBA"
-                  --device "cuda:1"
-                  --n_splits 10 
-                  --drug_sim_file "drug_affinity_mat.xlsx"
-                  --target_sim_file "target_affinity_mat.xlsx"
-                  --dti_mat "dti_mat.xlsx"
-                  --hgcn_dim 1800
-                  --dropout 0.5
-                  --epoch_num 900
-                  --lr 0.00005
-                  --topk 1 
+   + balanced_situatuion on KIBA 
+   + python main.py --root_path "/home/jiani.ma/MULGA/dataset 
+   +                --dataset "KIBA"
+   +                --device "cuda:1"
+   +                --n_splits 10 
+   +                --drug_sim_file "drug_affinity_mat.xlsx"
+   +                --target_sim_file "target_affinity_mat.xlsx"
+   +                --dti_mat "dti_mat.xlsx"
+   +                --hgcn_dim 1800
+   +                --dropout 0.5
+   +                --epoch_num 900
+   +                --lr 0.00005
+   +                --topk 1 
   
    imbalanced_situatuion on KIBA 
-   python main.py --root_path "/home/jiani.ma/MULGA/dataset
-                  --dataset "KIBA"
-                  --device "cuda:1"
-                  --n_splits 10 
-                  --drug_sim_file "drug_affinity_mat.xlsx"
-                  --target_sim_file "target_affinity_mat.xlsx"
-                  --dti_mat "dti_mat.xlsx"
-                  --hgcn_dim 1800
-                  --dropout 0.5
-                  --epoch_num 1000
-                  --lr 0.000008
-                  --topk 10 
+   + python main.py --root_path "/home/jiani.ma/MULGA/dataset
+   +                --dataset "KIBA"
+   +                --device "cuda:1"
+   +                --n_splits 10 
+   +                --drug_sim_file "drug_affinity_mat.xlsx"
+   +                --target_sim_file "target_affinity_mat.xlsx"
+   +                --dti_mat "dti_mat.xlsx"
+   +                --hgcn_dim 1800
+   +                --dropout 0.5
+   +                --epoch_num 1000
+   +                --lr 0.000008
+   +                --topk 10 
+
+### Comparison Methods Rerun 
+#### DeepDTA 
++ python main.py -- root_path "/home/jiani.ma/MULGA/dataset"
++                -- dataset "KIBA"
++                -- max_drug_len "drugs.xlsx"
++                -- max_target_len "targets.xlsx"
++                -- drug_file "drugs.xlsx"
++                -- target_file "targets.xlsx"
++                -- drug_kernel_size 5
++                -- target_kernel_size 11
++                -- num_filters 6
++                -- embedding_size 128
++                -- dropout 0.5
++                -- batch_size 256
++                -- topk 1
++                -- lr 0.00001 
++                -- drug_sim_file 'drug_affinity_mat.xlsx'
++                -- target_sim_file 'target_affinity_mat.xlsx'
++                -- dti_file 'dti_mat.xlsx'
++                -- drug_encoder_path "/home/jiani.ma/MULGA/DeepDTA/KIBA_encoder/drug_encoder.xlsx"
++                -- target_encoder_path "/home/jiani.ma/MULGA/DeepDTA/KIBA_encoder/target_encoder.xlsx"
++                -- device "cuda:1"
++                -- n_splits 10
+
++ (topk can be set to 1 or 10, where 1 denotes pos:neg = 1:1 while 10 denotes pos:neg = 1:10) 
+
+#### DeepConvDTI
++ python main.py -- root_path "/home/jiani.ma/MULGA/dataset"
++                -- dataset "KIBA"
++                -- max_drug_len "drugs.xlsx"
++                -- max_target_len "targets.xlsx"
++                -- drug_file "drugs.xlsx"
++                -- target_file "targets.xlsx"
++                -- drug_kernel_size 5
++                -- target_kernel_size 11
++                -- num_filters 3
++                -- embedding_size 128
++                -- dropout 0.5
++                -- batch_size 256
++                -- topk 1
++                -- lr 0.000001
++                -- drug_sim_file 'drug_affinity_mat.xlsx'
++                -- target_sim_file 'target_affinity_mat.xlsx'
++                -- dti_file 'dti_mat.xlsx'
++                -- drug_encoder_path "/home/jiani.ma/MULGA/DeepConvDTI/KIBA_encoder/drug_encoder.xlsx"
++                -- target_encoder_path "/home/jiani.ma/MULGA/DeepConvDTI/KIBA_encoder/target_encoder.xlsx"
++                -- device "cuda:0"
++                -- n_splits 10
+
+#### GraphDTA 
++ python main.py -- num_filters 6
++                -- epoch_num 100
++                -- lr 0.0005
++                -- batch_size 512
++                -- device "cuda:0"
++                -- dropout 0.3
++                -- max_seq_len 1000
++                -- embedding_dim 128
++                -- target_kernel_size 3 
++                -- topk 1 
++                -- n_splits 10 
++                -- data_folder "/home/jiani.ma/MULGA/dataset/KIBA"
++                -- drug_sim_path "drug_affinity_mat.xlsx"
++                -- target_sim_path "target_affinity_mat.xlsx"   
++                -- DTI_path "dti_mat.xlsx"
++                -- drug_smiles_path "drugs.xlsx"drugs.xlsx
++                -- target_fasta_path "targets.xlsx"
+
+#### LRSpNM
++ python main.py -- data_folder "/home/amber/MULGA/LRSpNM/data/KIBA/"
++                -- drug_sim_path "drug_sim_mat.xlsx"
++                -- target_sim_path "target_sim_mat.xlsx"
++                -- DTI_path "dti_mat.xlsx"
++                -- m 1720 
++                -- n 220 
++                -- lambda_d 2
++                -- lambda_t 2
++                -- alpha  1
++                -- mu_1 1
++                -- topk 1
++                -- p  0.8
++                -- n_splits 10 
++                -- epoch_num 100
 
 
 
-   
 
 
+
+
+
+
+
+
+           
 
 
