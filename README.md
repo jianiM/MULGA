@@ -84,15 +84,15 @@ dependencies:
    ---> protein_features/PAAC_features.xlsx
 
 3. setting all the features path in config_init.py and generate drug affinity matrix and target affinity matrix 
-   + Running: 
-   + python generate_drug_affinity_mat.py > drug_affinity_mat.txt
-   + python generate_target_affinity_mat.py > target_affinity_mat.txt 
+   Running: 
+   *python generate_drug_affinity_mat.py > drug_affinity_mat.txt
+   *python generate_target_affinity_mat.py > target_affinity_mat.txt 
    
 
 4. setting the hyperparameters in the config_init.py then train and test model under 10fold CV train-test scheme
-   + Running: 
-   + balanced_situatuion on DrugBank 
-   + python main.py --root_path "/home/jiani.ma/MULGA/dataset 
+   Running: 
+   +balanced_situatuion on DrugBank 
+   *python main.py --root_path "/home/jiani.ma/MULGA/dataset 
                   --dataset "DrugBank"
                   --device "cuda:0"
                   --n_splits 10 
@@ -105,8 +105,8 @@ dependencies:
                   --lr 0.000005
                   --topk 1 
   
-   + imbalanced_situatuion on DrugBank 
-   + python main.py --root_path "/home/jiani.ma/MULGA/dataset
+   +imbalanced_situatuion on DrugBank 
+   * python main.py --root_path "/home/jiani.ma/MULGA/dataset
                    --dataset "DrugBank"
                    --device "cuda:0"
                    --n_splits 10 
@@ -119,8 +119,8 @@ dependencies:
                    --lr 0.000008
                    -- topk 10 
 
-   + balanced_situatuion on KIBA 
-   + python main.py --root_path "/home/jiani.ma/MULGA/dataset 
+   +balanced_situatuion on KIBA 
+   * python main.py --root_path "/home/jiani.ma/MULGA/dataset 
                    --dataset "KIBA"
                    --device "cuda:1"
                    --n_splits 10 
@@ -133,8 +133,8 @@ dependencies:
                    --lr 0.00005
                    --topk 1 
   
-   imbalanced_situatuion on KIBA 
-   + python main.py --root_path "/home/jiani.ma/MULGA/dataset
+   +imbalanced_situatuion on KIBA 
+   *python main.py --root_path "/home/jiani.ma/MULGA/dataset
                    --dataset "KIBA"
                    --device "cuda:1"
                    --n_splits 10 
@@ -149,7 +149,7 @@ dependencies:
 
 ### Comparison Methods Rerun 
 #### DeepDTA 
-+ python main.py -- root_path "/home/jiani.ma/MULGA/dataset"
+*python main.py -- root_path "/home/jiani.ma/MULGA/dataset"
                 -- dataset "KIBA"
                 -- max_drug_len "drugs.xlsx"
                 -- max_target_len "targets.xlsx"
@@ -174,7 +174,7 @@ dependencies:
 + (topk can be set to 1 or 10, where 1 denotes pos:neg = 1:1 while 10 denotes pos:neg = 1:10) 
 
 #### DeepConvDTI
-+ python main.py -- root_path "/home/jiani.ma/MULGA/dataset"
+*python main.py -- root_path "/home/jiani.ma/MULGA/dataset"
                 -- dataset "KIBA"
                 -- max_drug_len "drugs.xlsx"
                 -- max_target_len "targets.xlsx"
@@ -197,7 +197,7 @@ dependencies:
                 -- n_splits 10
 
 #### GraphDTA 
-+ python main.py -- num_filters 6
+*python main.py -- num_filters 6
                 -- epoch_num 100
                 -- lr 0.0005
                 -- batch_size 512
@@ -216,7 +216,7 @@ dependencies:
                 -- target_fasta_path "targets.xlsx"
 
 #### LRSpNM
-+ python main.py -- data_folder "/home/amber/MULGA/LRSpNM/data/KIBA/"
+*python main.py -- data_folder "/home/amber/MULGA/LRSpNM/data/KIBA/"
                 -- drug_sim_path "drug_sim_mat.xlsx"
                 -- target_sim_path "target_sim_mat.xlsx"
                 -- DTI_path "dti_mat.xlsx"
