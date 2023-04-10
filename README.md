@@ -215,6 +215,38 @@ dependencies:
                 -- drug_smiles_path "drugs.xlsx"drugs.xlsx
                 -- target_fasta_path "targets.xlsx"
 
+#### HyperAttentionDTI 
+* python main.py -- max_drug_len 100 
+                -- max_target_len 1000
+                -- root_path "/home/jiani.ma/MULGA/dataset"
+                -- dataset "DrugBank"
+                -- drug_file "drugs.xlsx"
+                -- target_file "targets.xlsx"
+                -- drug_sim_file 'drug_affinity_mat.xlsx'
+                -- target_sim_file 'target_affinity_mat.xlsx'
+                -- drug_num 1822
+                -- target_num 1447
+                -- conv 40
+                -- drug_kernel [4,6,8]
+                -- target_kernel [4,8,12]
+                -- dropout 0.5
+                -- batch_size 128 
+                -- topk 1
+                -- lr 5e-5
+
+#### MLMC
+* python main.py -- m 1822
+                 -- n 1447 
+                 -- alpha 0.5
+                  --mu 10 
+                  --lamda 10 
+                  --delta 0.5 
+                  --data_folder "/home/amber/MULGA/dataset/DrugBank/"
+                  --XSD_path "dti_mat.xlsx"
+                  --XDD_path "drug_affinity_mat.xlsx"
+                  --topk 1
+                  
+
 #### LRSpNM
 * python main.py -- data_folder "/home/amber/MULGA/LRSpNM/data/KIBA/"
                 -- drug_sim_path "drug_sim_mat.xlsx"
