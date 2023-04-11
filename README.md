@@ -28,7 +28,7 @@ The datasets we used in this study are provided at https://zenodo.org/deposit/77
               dti_mat.xlsx   --- dti mat 
 
 ## Step-by-step running for MULGA 
-### 0 Prepare conda enviroment and install Python libraries needed
+### Prepare conda enviroment and install Python libraries needed
 + conda create -n bio python=3.9 
 + source activate bio 
 + conda install -y -c conda-forge rdkit
