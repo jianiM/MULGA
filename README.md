@@ -14,18 +14,18 @@ The datasets we used in this study are provided at https://zenodo.org/deposit/77
 1447 proteins
 6871 validated DTIs  
 * four files: drugs.xlsx     --- drug id and smiles 
-*             targets.xlsx   --- uniprot id and fasta
-*             dti_list.xlsx  --- dti mapping list 
-*             dti_mat.xlsx   --- dti mat 
+              targets.xlsx   --- uniprot id and fasta
+              dti_list.xlsx  --- dti mapping list 
+              dti_mat.xlsx   --- dti mat 
 
 ### KIBA
 1720  drugs 
 220   proteins
 22154 validated DTIs
 * four files: drugs.xlsx     --- drug id and smiles 
-*             targets.xlsx   --- uniprot id and fasta
-*             dti_list.xlsx  --- dti mapping list 
-*             dti_mat.xlsx   --- dti mat 
+              targets.xlsx   --- uniprot id and fasta
+              dti_list.xlsx  --- dti mapping list 
+              dti_mat.xlsx   --- dti mat 
 
 ## Step-by-step running for MULGA 
 ### 0 Prepare conda enviroment and install Python libraries needed
