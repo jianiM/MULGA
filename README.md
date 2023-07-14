@@ -146,7 +146,37 @@ dependencies:
                    --dropout 0.5
                    --epoch_num 1000
                    --lr 0.000008
+                   --topk 10
+     
+   + balanced_situatuion on Davis 
+   * python main.py --root_path "/home/jiani.ma/MULGA/dataset 
+                   --dataset "davis"
+                   --device "cuda:0"
+                   --n_splits 10 
+                   --drug_sim_file "drug_affinity_mat.xlsx"
+                   --target_sim_file "target_affinity_mat.xlsx"
+                   --dti_mat "dti_mat.xlsx"
+                   --hgcn_dim 2000
+                   --dropout 0.3
+                   --epoch_num 1000
+                   --lr 0.0001
+                   --topk 1 
+  
+   + imbalanced_situatuion on Davis 
+   * python main.py --root_path "/home/jiani.ma/MULGA/dataset
+                   --dataset "davis"
+                   --device "cuda:0"
+                   --n_splits 10 
+                   --drug_sim_file "drug_affinity_mat.xlsx"
+                   --target_sim_file "target_affinity_mat.xlsx"
+                   --dti_mat "dti_mat.xlsx"
+                   --hgcn_dim 1800
+                   --dropout 0.5
+                   --epoch_num 1000
+                   --lr 0.000008
                    --topk 10 
+
+     
 
 ### Comparison Methods Rerun 
 #### DeepDTA 
