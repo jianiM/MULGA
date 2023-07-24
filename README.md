@@ -17,7 +17,6 @@ The datasets we used in this study are provided at https://zenodo.org/deposit/77
               targets.xlsx   --- uniprot id and fasta
               dti_list.xlsx  --- dti mapping list 
               dti_mat.xlsx   --- dti mat 
-
 ### KIBA
 1720  drugs 
 220   proteins
@@ -26,7 +25,6 @@ The datasets we used in this study are provided at https://zenodo.org/deposit/77
               targets.xlsx   --- uniprot id and fasta
               dti_list.xlsx  --- dti mapping list 
               dti_mat.xlsx   --- dti mat
-
 ### Davis
 68  drugs 
 379   proteins
