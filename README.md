@@ -108,7 +108,7 @@ dependencies:
    *python generate_target_affinity_mat.py > target_affinity_mat.txt 
    
 
-4. setting the hyperparameters in the config_init.py then train and test model under 10fold CV train-test scheme
+4. setting the hyperparameters in the config_init.py then train and test model under 10fold CV train-test scheme, 
    Running: 
    + balanced_situatuion on DrugBank 
    * python main.py --root_path "/home/jiani.ma/MULGA/dataset 
@@ -174,10 +174,10 @@ dependencies:
                    --drug_sim_file "drug_affinity_mat.xlsx"
                    --target_sim_file "target_affinity_mat.xlsx"
                    --dti_mat "dti_mat.xlsx"
-                   --hgcn_dim 2000
-                   --dropout 0.3
-                   --epoch_num 1000
-                   --lr 0.0001
+                   --hgcn_dim 200
+                   --dropout 0.1
+                   --epoch_num 2500
+                   --lr 0.001
                    --topk 1 
   
    + imbalanced_situatuion on Davis 
@@ -188,11 +188,40 @@ dependencies:
                    --drug_sim_file "drug_affinity_mat.xlsx"
                    --target_sim_file "target_affinity_mat.xlsx"
                    --dti_mat "dti_mat.xlsx"
-                   --hgcn_dim 1800
-                   --dropout 0.5
-                   --epoch_num 1000
-                   --lr 0.000008
-                   --topk 10 
+                   --hgcn_dim 200
+                   --dropout 0.1
+                   --epoch_num 2000
+                   --lr 0.0001
+                   --topk 10
+
+   + balanced_situatuion on BindingDB 
+   * python main.py --root_path "/home/jiani.ma/MULGA/dataset
+                   --dataset "BindingDB"
+                   --device "cuda:0"
+                   --n_splits 10 
+                   --drug_sim_file "drug_affinity_mat.xlsx"
+                   --target_sim_file "target_affinity_mat.xlsx"
+                   --dti_mat "dti_mat.xlsx"
+                   --hgcn_dim 1000
+                   --dropout 0.3
+                   --epoch_num 500
+                   --lr 1e-5
+                   --topk 1
+
+  
+   + imbalanced_situatuion on BindingDB 
+   * python main.py --root_path "/home/jiani.ma/MULGA/dataset
+                   --dataset "BindingDB"
+                   --device "cuda:0"
+                   --n_splits 10 
+                   --drug_sim_file "drug_affinity_mat.xlsx"
+                   --target_sim_file "target_affinity_mat.xlsx"
+                   --dti_mat "dti_mat.xlsx"
+                   --hgcn_dim 1000
+                   --dropout 0.1
+                   --epoch_num 800
+                   --lr 1e-5
+                   --topk 10
 
      
 
