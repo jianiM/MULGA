@@ -27,15 +27,22 @@ The datasets we used in this study are provided at https://zenodo.org/deposit/77
               dti_list.xlsx  --- dti mapping list 
               dti_mat.xlsx   --- dti mat
 
-### KIBA
-1720  drugs 
-220   proteins
-22154 validated DTIs
+### Davis
+68  drugs 
+379   proteins
+7320 validated DTIs
 * four files: drugs.xlsx     --- drug id and smiles 
               targets.xlsx   --- uniprot id and fasta
               dti_list.xlsx  --- dti mapping list 
               dti_mat.xlsx   --- dti mat 
-
+### BindingDB
+3400  drugs 
+886   proteins
+9166 validated DTIs
+* four files: drugs.xlsx     --- drug id and smiles 
+              targets.xlsx   --- uniprot id and fasta
+              dti_list.xlsx  --- dti mapping list 
+              dti_mat.xlsx   --- dti mat 
   
 
 ## Step-by-step running for MULGA 
